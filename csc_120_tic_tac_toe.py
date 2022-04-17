@@ -20,4 +20,145 @@ def print_board():
   for elem in board:
     print(elem)
 
-print_board()
+
+# Function to check if mark is available
+def check_mark(row, col):
+  if board[row][col] == '-':
+    return True
+  else:
+    return False
+
+# Function to place an X or O at designated location
+def place_mark(row, col, player):
+  if player == 1:
+    board[row][col] = 'X'
+  if player == 2:
+    board[row][col] = 'O'
+
+# Function to check if any player wins based on known winning game boards
+def check_win(player):
+  if player == 1:
+    if board[0][0] == 'X' and board[1][0] == 'X' and board[2][0] == 'X':
+      return True
+    elif board[0][1] == 'X' and board[1][1] == 'X' and board[2][1] == 'X':
+      return True
+    elif board[0][2] == 'X' and board[1][2] == 'X' and board[2][2] == 'X':
+      return True
+    elif board[0][0] == 'X' and board[0][1] == 'X' and board[0][2] == 'X':
+      return True
+    elif board[1][0] == 'X' and board[1][1] == 'X' and board[1][2] == 'X':
+      return True
+    elif board[2][0] == 'X' and board[2][1] == 'X' and board[2][2] == 'X':
+      return True
+    elif board[0][0] == 'X' and board[1][1] == 'X' and board[2][2] == 'X':
+      return True
+    elif board[2][0] == 'X' and board[1][1] == 'X' and board[0][2] == 'X':
+      return True
+    else:
+      return False
+  if player == 2:
+    if board[0][0] == 'O' and board[1][0] == 'O' and board[2][0] == 'O':
+      return True
+    elif board[0][1] == 'O' and board[1][1] == 'O' and board[2][1] == 'O':
+      return True
+    elif board[0][2] == 'O' and board[1][2] == 'O' and board[2][2] == 'O':
+      return True
+    elif board[0][0] == 'O' and board[0][1] == 'O' and board[0][2] == 'O':
+      return True
+    elif board[1][0] == 'O' and board[1][1] == 'O' and board[1][2] == 'O':
+      return True
+    elif board[2][0] == 'O' and board[2][1] == 'O' and board[2][2] == 'O':
+      return True
+    elif board[0][0] == 'O' and board[1][1] == 'O' and board[2][2] == 'O':
+      return True
+    elif board[2][0] == 'O' and board[1][1] == 'O' and board[0][2] == 'O':
+      return True
+    else:
+      return False
+
+def intro():
+  print('Welcome to Tic Tac Toe!')
+  print("Here's the game board")
+  print_board()
+  print('INSTRUCTIONS:')
+  print('Player 1 is X and Player 2 is O')
+  print('Each row and column are numbered from 0 - 2')
+  print('For example, the first row is 0 and the last row is 2')
+  print('The same rules apply to the columns')
+  input('Press any key to continue: ')
+
+
+# Main game function
+def main():
+  # !! DEBUG CODE TO TEST THE FUNCTIONS !!
+  #print('Testing print_board')
+  #print_board()
+  #print('Testing before place_mark, check_mark at 1, 1 is', check_mark(1, 1))
+  #place_mark(0, 0, 1)
+  #print('After place_mark, testing for check_mark at 1, 1 is', check_mark(1, 1))
+  #print_board()
+  #place_mark(1, 1, 1)
+  #place_mark(2, 2, 1)
+  #print_board()
+  #print(board)
+  #if check_win(1) == True:
+  #  print("Player 1 wins the game!!")
+  #if check_win(2) == True:
+  #  print("Player 2 wins the game!!")
+
+  players = [1, 2]
+  intro()
+  
+  game = 1
+  while game == 1:
+
+    for player in players:
+
+      if player == 1:
+        check = 0
+        while check == 0:
+          print('Player', player, 'mark your X')
+          row = int(input('Enter the row number (0 - 2): '))
+          # Error checking
+          if row < 0 or row > 2:
+            row = int(input('Please enter a number between 0 and 2: '))
+          col = int(input('Enter the column number (0 - 2): '))
+          # Error checking
+          if col < 0 or col > 2:
+            col = int(input('Please enter a number between 0 and 2: '))
+
+          if check_mark(row, col) == True:
+            place_mark(row, col, player)
+            print_board()
+            # Breaks out of check while loop
+            check = 1
+          else:
+            print("That space is already taken. Please select another.")
+
+      if player == 2:
+        check = 0
+        while check == 0:
+          print('Player', player, 'mark your O')
+          row = int(input('Enter the row number (0 - 2): '))
+          # Error checking
+          if row < 0 or row > 2:
+            row = int(input('Please enter a number between 0 and 2: '))
+          col = int(input('Enter the column number (0 - 2): '))
+          # Error checking
+          if col < 0 or col > 2:
+            col = int(input('Please enter a number between 0 and 2: '))
+
+          if check_mark(row, col) == True:
+            place_mark(row, col, player)
+            print_board()
+            # Breaks out of check while loop
+            check = 1
+          else:
+            print("That space is already taken. Please select another.")
+
+      if check_win(player) == True:
+        print('Player', player, 'wins the game!!')
+        game = 0
+        break
+
+main()
